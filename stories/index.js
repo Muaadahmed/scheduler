@@ -21,6 +21,9 @@ import Header from "components/Appointment/Header.js";
 
 import Empty from "components/Appointment/Empty.js";
 
+import Show from "components/Appointment/Show.js";
+import { act } from "@testing-library/react";
+
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -153,3 +156,10 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm"/>)
   .add("Header", () => <Header time="12pm"/>)
   .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
+  .add("Show", () => 
+  <Show 
+    student="Lydia Miller-Jones" 
+    interviewer={interviewers}
+    onEdit={action("onEdit")}
+    onDelete={action("onDelete")} 
+    />)
