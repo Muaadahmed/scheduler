@@ -68,9 +68,7 @@ export default function Application(props) {
   const [day, setDay] = useState('Monday');
   const appointmentList = appointments.map( appointment => {
     return (
-      <li>
-        <Appointment key={appointment.id} {...appointment}/>
-      </li>
+      <Appointment key={appointment.id} {...appointment}/>
       )
   });
   return (
