@@ -29,6 +29,8 @@ import Status from "components/Appointment/Status";
 
 import Error from "components/Appointment/Error";
 
+import Form from "components/Appointment/Form";
+
 import { act } from "@testing-library/react";
 
 storiesOf("Button", module)
@@ -132,6 +134,8 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
+const interviewerObj = { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" };
+
 storiesOf("InterviewerList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -182,3 +186,20 @@ storiesOf("Appointment", module)
   message="Could not delete appointment."
   onClose={action("onClose")}
   />)
+  .add("Edit", () => 
+  <Form 
+  student="Muaad"
+  interviewer={interviewerObj}
+  interviewers={interviewers}
+  onSave={action("onSave")}
+  onCancel={action("onCancel")}
+  />
+  )
+  .add("Create", () => 
+  <Form 
+  interviewer={interviewerObj}
+  interviewers={interviewers}
+  onSave={action("onSave")}
+  onCancel={action("onCancel")}
+  />
+  )
