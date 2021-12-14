@@ -9,7 +9,7 @@ import DayList from "./DayList";
 import "components/Appointment";
 import Appointment from "components/Appointment";
 
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -52,7 +52,8 @@ export default function Application(props) {
         id: 5,
         time: "4pm"
       }
-    ]
+    ],
+    interviewers: {}
   });
 
   const setDay = day => setState({...state, day});
@@ -61,10 +62,12 @@ export default function Application(props) {
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
-      axios.get('/api/appointments')
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
     ])
     .then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}))
+      console.log(all[2].data);
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     })
     .catch(err => console.log(err.message))
   },[])
@@ -74,6 +77,14 @@ export default function Application(props) {
       <Appointment key={appointment.id} {...appointment}/>
       )
   });
+
+  // const schedule = state.appointments.map((appointment) => {
+  //   const interview = getInterview(state, appointment.interview);
+
+  //   return (
+  //     <Appointment key={appointment.id} {...appointment}/>
+  //   );
+  // })
   return (
     <main className="layout">
       <section className="sidebar">
