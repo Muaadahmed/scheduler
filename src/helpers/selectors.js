@@ -1,6 +1,5 @@
 
 export function getAppointmentsForDay(state, day) {
-  //... returns an array of appointments for that day
   let filteredArray = [];
   if (state.days.length === 0) {
     return filteredArray;
@@ -22,34 +21,6 @@ export function getAppointmentsForDay(state, day) {
   return filteredArray;
 }
 
-// const appointment = {
-//   "1": {
-//     "id": 1,
-//     "time": "12pm",
-//     "interview": {
-//       "student": "Archie Cohen",
-//       "interviewer": 1
-//     }
-//   }
-// }
-
-// const interviewer = {
-//   "1": {
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   }
-// }
-
-// const returnedObj = {  
-//   "student": "Lydia Miller-Jones",
-//   "interviewer": {  
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   }
-// }
-
 export function getInterview(state, interview) {
   let interviewObj = {};
 
@@ -57,7 +28,6 @@ export function getInterview(state, interview) {
     return null;
   }
 
-  // We need interviewers obj and we need appointments data
   for (let appointment in state.appointments) {
     if (state.appointments[appointment].interview === null) {
       continue;
