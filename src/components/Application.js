@@ -9,7 +9,7 @@ import DayList from "./DayList";
 import "components/Appointment";
 import Appointment from "components/Appointment";
 
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -72,19 +72,15 @@ export default function Application(props) {
     .catch(err => console.log(err.message))
   },[])
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
+
   const appointmentList = dailyAppointments.map( appointment => {
+    const interview = getInterview(state, appointment.interview);
+    
     return (
-      <Appointment key={appointment.id} {...appointment}/>
+      <Appointment key={appointment.id} interview={interview} {...appointment} interviewers={dailyInterviewers}/>
       )
   });
-
-  // const schedule = state.appointments.map((appointment) => {
-  //   const interview = getInterview(state, appointment.interview);
-
-  //   return (
-  //     <Appointment key={appointment.id} {...appointment}/>
-  //   );
-  // })
   return (
     <main className="layout">
       <section className="sidebar">
