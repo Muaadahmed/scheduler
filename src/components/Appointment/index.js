@@ -15,7 +15,7 @@ const SHOW = "SHOW";
 
 export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
-    props.interview ? useVisualMode(SHOW) : useVisualMode(EMPTY)
+    props.interview ? SHOW : EMPTY
   );
   return (
     <article className="appointment">
