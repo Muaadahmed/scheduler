@@ -81,6 +81,7 @@ export default function Application(props) {
 
     const obj = {
       id: appointment.id,
+      time: appointment.time,
       interview: {
         student: appointment.interview.student,
         interviewer: appointment.interview.interviewer.id
@@ -92,7 +93,7 @@ export default function Application(props) {
       [id]: obj
     };
     //setState((prev) => ({...prev, ...appointments}))
-    axios.put(`/api/appointments/${appointment.id}`, obj)
+    return axios.put(`/api/appointments/${appointment.id}`, obj)
       .then(setState((prev) => ({...prev, appointments})))
       .catch(err => console.log(err.message))
     // console.log("book interview id and interview: ", id, interview);
