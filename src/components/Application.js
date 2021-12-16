@@ -66,7 +66,7 @@ export default function Application(props) {
       axios.get('/api/interviewers')
     ])
     .then((all) => {
-      console.log(all[2].data);
+      console.log(all);
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     })
     .catch(err => console.log(err.message))
@@ -77,25 +77,38 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    console.log("bookinterview appointment obj", appointment);
+
+    const obj = {
+      id: appointment.id,
+      interview: {
+        student: appointment.interview.student,
+        interviewer: appointment.interview.interviewer.id
+      }
+    }
 
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [id]: obj
     };
     //setState((prev) => ({...prev, ...appointments}))
-    setState({...state, appointments});
-    console.log(id, interview);
+    axios.put(`/api/appointments/${appointment.id}`, obj)
+      .then(setState((prev) => ({...prev, appointments})))
+      .catch(err => console.log(err.message))
+    // console.log("book interview id and interview: ", id, interview);
+    console.log("bookInterview appointments", appointments);
   }
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
+
   const appointmentList = dailyAppointments.map( appointment => {
     const interview = getInterview(state, appointment.interview);
     console.log("interview app", interview);
-    console.log("spreaded appointments", {...appointment});
+    console.log("spreaded appointments", appointment);
     return (
-      <Appointment key={appointment.id} interview={interview} {...appointment} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
+      <Appointment key={appointment.id}  interview={interview} time={appointment.time} id={appointment.id} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
     )
   });
   return (

@@ -8,6 +8,8 @@ import Empty from "./Empty";
 
 import Form from "./Form";
 
+import Status from "./Status";
+
 import "components/Appointment/styles.scss";
 
 import { useVisualMode } from "hooks/useVisualMode";
@@ -20,18 +22,19 @@ export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+  console.log("appointment props interview", props.interview);
   function save(name, interviewer) {
-    console.log("save name",name);
-    console.log("save interviewer", interviewer)
+    // console.log("save name",name);
+    // console.log("save interviewer", interviewer)
     const interview = {
       student: name,
-      interviewer
+      interviewer: interviewer
     };
     props.bookInterview(props.id, interview);
     transition(SHOW);
   }
-  console.log('appointment comp', props);
-  console.log("form interview", props.interview)
+  // console.log('appointment comp', props);
+  // console.log("form interview", props.interview)
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -39,13 +42,13 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer.name}
+          interviewer={props.interview.interviewer}
         />
       )}
       {mode === CREATE && (
         <Form
           student={props.interview ? props.interview.student : ''}
-          interviewer={props.interview ? props.interview.interviewer : ''}
+          interviewer={props.interview ? props.interview.interviewer.id : ''}
           interviewers={props.interviewers}
           onSave={save}
           onCancel={() => transition(EMPTY)}
