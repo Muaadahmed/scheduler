@@ -27,9 +27,11 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview);
+    transition(SHOW);
   }
   console.log('appointment comp', props);
+  console.log("form interview", props.interview)
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -37,14 +39,14 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          interviewer={props.interview.interviewer.name}
         />
       )}
       {mode === CREATE && (
         <Form
-          student={props.interview}
-          interviewer={props.interview}
-          interviewers={[]}
+          student={props.interview ? props.interview.student : ''}
+          interviewer={props.interview ? props.interview.interviewer : ''}
+          interviewers={props.interviewers}
           onSave={save}
           onCancel={() => transition(EMPTY)}
         />

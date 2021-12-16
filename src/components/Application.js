@@ -73,6 +73,17 @@ export default function Application(props) {
   },[])
   
   function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    //setState((prev) => ({...prev, ...appointments}))
+    setState({...state, appointments});
     console.log(id, interview);
   }
 
@@ -81,7 +92,8 @@ export default function Application(props) {
 
   const appointmentList = dailyAppointments.map( appointment => {
     const interview = getInterview(state, appointment.interview);
-    
+    console.log("interview app", interview);
+    console.log("spreaded appointments", {...appointment});
     return (
       <Appointment key={appointment.id} interview={interview} {...appointment} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
     )
