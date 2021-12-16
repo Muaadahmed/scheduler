@@ -71,6 +71,11 @@ export default function Application(props) {
     })
     .catch(err => console.log(err.message))
   },[])
+  
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
@@ -78,8 +83,8 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview);
     
     return (
-      <Appointment key={appointment.id} interview={interview} {...appointment} interviewers={dailyInterviewers}/>
-      )
+      <Appointment key={appointment.id} interview={interview} {...appointment} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
+    )
   });
   return (
     <main className="layout">

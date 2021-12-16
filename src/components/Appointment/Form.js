@@ -5,8 +5,8 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
-  const [student, setStudent] = useState(props.student || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [student, setStudent] = useState(props.student);
+  const [interviewer, setInterviewer] = useState(props.interviewer );
   console.log('props interviewer', props.interviewer);
   const reset = function() {
     setStudent("");
@@ -40,7 +40,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={props.onSave}>Save</Button>
+          <Button confirm onClick={() => props.onSave(props.student, props.interviewer)}>Save</Button>
         </section>
       </section>
     </main>
