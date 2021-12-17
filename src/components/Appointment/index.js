@@ -53,12 +53,12 @@ export default function Appointment(props) {
   }
 
   function cancel() {
-    transition(DELETING);
+    transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => {
         transition(EMPTY);
       })
-      .catch(transition(ERROR_DELETE))
+      .catch(transition(ERROR_DELETE, true))
   }
   // console.log('appointment comp', props);
   // console.log("form interview", props.interview)
@@ -107,10 +107,16 @@ export default function Appointment(props) {
       />
       )}
       {mode === ERROR_SAVE && (
-        <Error message="Save"/>
+        <Error 
+        message="Save"
+        onClose={back}
+        />
       )}
       {mode === ERROR_DELETE && (
-         <Error message="Delete"/>
+         <Error 
+         message="Delete"
+         onClose={back}
+         />
       )}
 
     </article>
