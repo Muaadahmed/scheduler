@@ -97,7 +97,7 @@ export default function Application(props) {
       .then(() => {
         setState((prev) => ({...prev, appointments}))
       })
-      .catch(err => console.log(err.message))
+     // .catch(err => console.log('axios put error', err.message))
     // console.log("book interview id and interview: ", id, interview);
     // console.log("bookInterview appointments", appointments);
   }

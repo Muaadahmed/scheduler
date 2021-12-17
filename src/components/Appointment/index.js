@@ -12,6 +12,8 @@ import Status from "./Status";
 
 import Confirm from "./Confirm";
 
+import Error from "./Error";
+
 import "components/Appointment/styles.scss";
 
 import { useVisualMode } from "hooks/useVisualMode";
@@ -22,6 +24,9 @@ const CREATE ="CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
@@ -29,8 +34,8 @@ export default function Appointment(props) {
   );
   // console.log("appointment props interview", props.interview);
   function save(name, interviewer) {
-    // console.log("save name",name);
-    // console.log("save interviewer", interviewer)
+    console.log("save name",name);
+    console.log("save interviewer", interviewer)
     const interview = {
       student: name,
       interviewer: interviewer
@@ -38,8 +43,13 @@ export default function Appointment(props) {
 
     transition(SAVING);
     props.bookInterview(props.id, interview).then(() => {
+      console.log("Transitioning to show");
       transition(SHOW);
     })
+    .catch(() => {
+      console.log("Transitioning to error_show");
+      transition(ERROR_SAVE, true);
+    });
   }
 
   function cancel() {
@@ -48,6 +58,7 @@ export default function Appointment(props) {
       .then(() => {
         transition(EMPTY);
       })
+      .catch(transition(ERROR_DELETE))
   }
   // console.log('appointment comp', props);
   // console.log("form interview", props.interview)
@@ -60,6 +71,7 @@ export default function Appointment(props) {
           student={props.interview ? props.interview.student : ""}
           interviewer={props.interview ? props.interview.interviewer : null}
           onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(EDIT)}
         />
       )}
       {mode === CREATE && (
@@ -83,6 +95,22 @@ export default function Appointment(props) {
         onCancel={() => transition(SHOW)}
         onConfirm={cancel}
         />
+      )}
+
+      {mode === EDIT && (
+        <Form
+        student={props.interview ? props.interview.student : ''}
+        interviewer={props.interview ? props.interview.interviewer.id : ''}
+        interviewers={props.interviewers}
+        onSave={save}
+        onCancel={() => transition(SHOW)}
+      />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="Save"/>
+      )}
+      {mode === ERROR_DELETE && (
+         <Error message="Delete"/>
       )}
 
     </article>
