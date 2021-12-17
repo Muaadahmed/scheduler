@@ -77,7 +77,7 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    console.log("bookinterview appointment obj", appointment);
+    // console.log("bookinterview appointment obj", appointment);
 
     const obj = {
       id: appointment.id,
@@ -94,10 +94,32 @@ export default function Application(props) {
     };
     //setState((prev) => ({...prev, ...appointments}))
     return axios.put(`/api/appointments/${appointment.id}`, obj)
-      .then(setState((prev) => ({...prev, appointments})))
+      .then(() => {
+        setState((prev) => ({...prev, appointments}))
+      })
       .catch(err => console.log(err.message))
     // console.log("book interview id and interview: ", id, interview);
-    console.log("bookInterview appointments", appointments);
+    // console.log("bookInterview appointments", appointments);
+  }
+
+  function cancelInterview(id) {
+    // state.appointments[id].interview = null;
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${appointment.id}`)
+      .then(() => {
+        setState({...state, appointments});
+        console.log('from cancel interview', state.appointments)
+      })
+      .catch(err => console.log(err.message))
   }
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -106,10 +128,10 @@ export default function Application(props) {
 
   const appointmentList = dailyAppointments.map( appointment => {
     const interview = getInterview(state, appointment.interview);
-    console.log("interview app", interview);
-    console.log("spreaded appointments", appointment);
+    // console.log("interview app", interview);
+    // console.log("spreaded appointments", appointment);
     return (
-      <Appointment key={appointment.id}  interview={interview} time={appointment.time} id={appointment.id} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
+      <Appointment key={appointment.id}  interview={interview} time={appointment.time} id={appointment.id} interviewers={dailyInterviewers} bookInterview={bookInterview} cancelInterview={cancelInterview}/>
     )
   });
   return (
