@@ -60,7 +60,7 @@ export function useApplicationData() {
       time: appointment.time,
       interview: {
         student: appointment.interview.student,
-        interviewer: appointment.interview.interviewer.id
+        interviewer: appointment.interview ? appointment.interview.interviewer.id : null
       }
     }
   
