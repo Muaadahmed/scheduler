@@ -32,9 +32,8 @@ export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
   function save(name, interviewer) {
-    console.log("save name",name);
-    console.log("save interviewer", interviewer)
     const interview = {
       student: name,
       interviewer: interviewer
@@ -42,11 +41,9 @@ export default function Appointment(props) {
 
     transition(SAVING);
     props.bookInterview(props.id, interview).then(() => {
-      console.log("Transitioning to show");
       transition(SHOW, true);
     })
     .catch(() => {
-      console.log("Transitioning to error_show");
       transition(ERROR_SAVE, true);
     });
   }
@@ -115,7 +112,6 @@ export default function Appointment(props) {
          onClose={back}
          />
       )}
-
     </article>
   );
 }
