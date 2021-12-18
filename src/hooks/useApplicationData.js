@@ -25,6 +25,29 @@ export function useApplicationData() {
     .catch(err => console.log(err.message))
   },[])
   
+  // function updateSpots(appointments) {
+  //   let spots = 0;
+  //   for (let appointment in appointments) {
+  //     if (!appointment.interview) {
+  //       spots++;
+  //     }
+  //   }
+  //   return spots;
+  // }
+
+  function updateSpots(state) {
+    return state.days.map(day => {
+      let spots = 0;
+      for (let appointment of day.appointments) {
+
+        if (!state.appointments[appointment].interview) {
+          spots++;
+        }
+      }
+      return {...day, spots};
+    })
+  }
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -45,10 +68,16 @@ export function useApplicationData() {
       ...state.appointments,
       [id]: obj
     };
+
+    const newState = {
+      ...state,
+      appointments
+    };
+    const daysUpdateSpots = updateSpots(newState);
     //setState((prev) => ({...prev, ...appointments}))
     return axios.put(`/api/appointments/${appointment.id}`, obj)
       .then(() => {
-        setState((prev) => ({...prev, appointments}))
+        setState((prev) => ({...prev, appointments, days: daysUpdateSpots}))
       })
      // .catch(err => console.log('axios put error', err.message))
     // console.log("book interview id and interview: ", id, interview);
@@ -66,11 +95,16 @@ export function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+
+    const newState = {
+      ...state,
+      appointments
+    };
+    const daysUpdateSpots = updateSpots(newState);
   
     return axios.delete(`/api/appointments/${appointment.id}`)
       .then(() => {
-        setState({...state, appointments});
-        console.log('from cancel interview', state.appointments)
+        setState({...state, appointments, days: daysUpdateSpots});
       })
   }
 
