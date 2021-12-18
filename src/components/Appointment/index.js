@@ -44,7 +44,7 @@ export default function Appointment(props) {
     transition(SAVING);
     props.bookInterview(props.id, interview).then(() => {
       console.log("Transitioning to show");
-      transition(SHOW);
+      transition(SHOW, true);
     })
     .catch(() => {
       console.log("Transitioning to error_show");
@@ -58,7 +58,7 @@ export default function Appointment(props) {
       .then(() => {
         transition(EMPTY);
       })
-      .catch(transition(ERROR_DELETE, true))
+      .catch(() => {transition(ERROR_DELETE, true)})
   }
   // console.log('appointment comp', props);
   // console.log("form interview", props.interview)
