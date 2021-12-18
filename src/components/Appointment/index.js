@@ -32,7 +32,6 @@ export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-  // console.log("appointment props interview", props.interview);
   function save(name, interviewer) {
     console.log("save name",name);
     console.log("save interviewer", interviewer)
@@ -60,8 +59,6 @@ export default function Appointment(props) {
       })
       .catch(() => {transition(ERROR_DELETE, true)})
   }
-  // console.log('appointment comp', props);
-  // console.log("form interview", props.interview)
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -99,8 +96,8 @@ export default function Appointment(props) {
 
       {mode === EDIT && (
         <Form
-        student={props.interview ? props.interview.student : ''}
-        interviewer={props.interview ? props.interview.interviewer.id : ''}
+        student={props.interview.student}
+        interviewer={props.interview.interviewer}
         interviewers={props.interviewers}
         onSave={save}
         onCancel={() => transition(SHOW)}
