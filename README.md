@@ -42,6 +42,8 @@ Setup guide: [Scheduler Api](https://github.com/lighthouse-labs/scheduler-api)
 ![Edit](https://github.com/Muaadahmed/scheduler/blob/master/img/edit.png?raw=true)
 ![Saving](https://github.com/Muaadahmed/scheduler/blob/master/img/saving.png?raw=true)
 ![Show](https://github.com/Muaadahmed/scheduler/blob/master/img/showhover.png?raw=true)
+![Delete](https://github.com/Muaadahmed/scheduler/blob/master/img/deleting.png?raw=true)
+![Confirm](https://github.com/Muaadahmed/scheduler/blob/master/img/delete.png?raw=true)
 
 ## Dependencies
 
